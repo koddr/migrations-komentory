@@ -1,0 +1,5 @@
+-- Delete tables
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS users;
