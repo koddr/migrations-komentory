@@ -16,7 +16,8 @@ CREATE TABLE "users" (
   "username" varchar(18) UNIQUE NOT NULL,
   "user_status" int NOT NULL DEFAULT (0),
   "user_role" varchar(32) NOT NULL,
-  "user_attrs" JSONB NOT NULL
+  "user_attrs" JSONB NOT NULL,
+  "user_settings" JSONB NOT NULL
 );
 
 -- Create projects table
