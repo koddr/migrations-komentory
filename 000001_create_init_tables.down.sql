@@ -1,4 +1,5 @@
 -- Delete tables
+DROP TABLE IF EXISTS reset_codes;
 DROP TABLE IF EXISTS answers;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS projects;

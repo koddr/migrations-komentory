@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Set timezone
 -- For more information, please visit:
 -- https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-SET TIMEZONE="Europe/Moscow";
+SET TIMEZONE="UTC";
 
 -- Create users table
 CREATE TABLE "users" (
@@ -15,7 +15,7 @@ CREATE TABLE "users" (
   "password_hash" varchar(64) NOT NULL,
   "username" varchar(18) UNIQUE NOT NULL,
   "user_status" int NOT NULL DEFAULT (0),
-  "user_role" varchar(32) NOT NULL,
+  "user_role" int NOT NULL DEFAULT (0),
   "user_attrs" JSONB NOT NULL,
   "user_settings" JSONB NOT NULL
 );
@@ -38,6 +38,7 @@ CREATE TABLE "tasks" (
   "updated_at" timestamp,
   "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
   "project_id" UUID NOT NULL REFERENCES "projects" ("id") ON DELETE CASCADE,
+  "alias" varchar(16) UNIQUE NOT NULL,
   "task_status" int NOT NULL DEFAULT (0),
   "task_attrs" JSONB NOT NULL
 );
@@ -50,12 +51,20 @@ CREATE TABLE "answers" (
   "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
   "project_id" UUID NOT NULL REFERENCES "projects" ("id") ON DELETE CASCADE,
   "task_id" UUID NOT NULL REFERENCES "tasks" ("id") ON DELETE CASCADE,
+  "alias" varchar(16) UNIQUE NOT NULL,
   "answer_status" int NOT NULL DEFAULT (0),
   "answer_attrs" JSONB NOT NULL
 );
 
+-- Create reset_codes table
+CREATE TABLE "reset_codes" (
+  "code" varchar(14) PRIMARY KEY,
+  "created_at" timestamp DEFAULT (now()),
+  "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE
+);
+
 -- Create users index
-CREATE INDEX "active_users" ON "users" ("id", "email", "username") WHERE "user_status" = 1;
+CREATE INDEX "active_users" ON "users" ("email", "username") WHERE "user_status" = 1;
 
 -- Create projects index
 CREATE INDEX "active_projects" ON "projects" ("alias") WHERE "project_status" = 1;
