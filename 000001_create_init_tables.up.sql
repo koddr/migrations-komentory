@@ -59,7 +59,7 @@ CREATE TABLE "answers" (
 -- Create reset_codes table
 CREATE TABLE "reset_codes" (
   "code" varchar(14) PRIMARY KEY,
-  "created_at" timestamp DEFAULT (now()),
+  "expire_at" timestamp DEFAULT (now()),
   "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE
 );
 
