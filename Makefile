@@ -18,4 +18,4 @@ migrate.local.down:
 	migrate -path $(PWD) -database "$(local_db_url)" down
 
 migrate.local.force:
-	migrate -path $(PWD) -database "$(db_url)" force $(version)
+	migrate -path $(PWD) -database "$(local_db_url)" force $(version)
