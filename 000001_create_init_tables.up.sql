@@ -56,11 +56,17 @@ CREATE TABLE "answers" (
   "answer_attrs" JSONB NOT NULL
 );
 
--- Create reset_codes table
-CREATE TABLE "reset_codes" (
+-- Create activation_codes table
+CREATE TABLE "activation_codes" (
   "code" varchar(14) PRIMARY KEY,
   "expire_at" timestamp DEFAULT (now()),
   "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE
+);
+
+-- Create reset_codes table
+CREATE TABLE "reset_codes" (
+  "code" varchar(14) PRIMARY KEY,
+  "expire_at" timestamp DEFAULT (now())
 );
 
 -- Create users index
