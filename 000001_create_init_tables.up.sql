@@ -66,11 +66,12 @@ CREATE TABLE "activation_codes" (
 -- Create reset_codes table
 CREATE TABLE "reset_codes" (
   "code" varchar(14) PRIMARY KEY,
-  "expire_at" timestamp DEFAULT (now())
+  "expire_at" timestamp DEFAULT (now()),
+  "email" varchar(255) NOT NULL REFERENCES "users" ("email") ON DELETE CASCADE
 );
 
 -- Create users index
-CREATE INDEX "active_users" ON "users" ("email", "username") WHERE "user_status" = 1;
+CREATE INDEX "active_users" ON "users" ("id", "email", "username") WHERE "user_status" = 1;
 
 -- Create projects index
 CREATE INDEX "active_projects" ON "projects" ("alias") WHERE "project_status" = 1;
